@@ -5,7 +5,11 @@
 ```bash
 npm install
 ```
-2. Iniciar servidor
+2. Configurar variables de entorno
+```bash
+cp .env.template .env
+```
+3. Iniciar servidor
 ```bash
 npm dev
 ```
