@@ -1,15 +1,15 @@
 # Aplicación de monitoreo
 
 ## Dev
-1. Instalar dependencias
-```bash
-npm install
-```
-2. Configurar variables de entorno
-```bash
-cp .env.template .env
-```
-3. Iniciar servidor
-```bash
-npm dev
-```
+
+1. Clonar el archivo .env.template a .env
+2. Configurar las variables de entorno en el archivo .env
+3. Ejecutar el comando `npm install`
+4. Levantar las bases de datos con el comando
+   ```bash
+   docker-compose up -d
+   ```
+5. Ejecutar
+   ```bash
+   npm run dev
+   ```
