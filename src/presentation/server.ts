@@ -1,14 +1,15 @@
 import { CheckService } from "../domain/use-cases/checks/check-service";
 import { SendEmailLogs } from "../domain/use-cases/email/send-email-logs";
 import { FileSystemDatasource } from "../infrastructure/datasources/file-system.datasource";
+import { MongoLogDatasource } from "../infrastructure/datasources/mongo-log.datasource";
 import { LogRepositoryImpl } from "../infrastructure/repositories/log.repository.impl";
 import { CronService } from "./cron/cron-service";
 import { EmailService } from "./email/email.service";
 
-
 // Instancias
-const fileSystemLogRepository = new LogRepositoryImpl(
-  new FileSystemDatasource()
+const logRepository = new LogRepositoryImpl(
+  // new FileSystemDatasource()
+  new MongoLogDatasource()
 );
 
 export class Server {
@@ -33,13 +34,14 @@ export class Server {
     //   "lmatus3@unica.edu.ni",
     //   "zukhulento01@gmail.com",
     // ]);
-    // CronService.createJob("*/5 * * * * *", () => {
-    //   const url = "https://google.com";
-    //   // const url = "http://localhost:3000";
-    //   new CheckService(
-    //     fileSystemLogRepository,
-    //     ()=>console.log(`${url} is ok`), undefined
-    //   ).execute(url);
-    // });
+    CronService.createJob("*/5 * * * * *", () => {
+      const url = "https://google.com";
+      // const url = "http://localhost:3000";
+      new CheckService(
+        logRepository,
+        () => console.log(`${url} is ok`),
+        undefined
+      ).execute(url);
+    });
   }
 }

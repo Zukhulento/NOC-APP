@@ -1,5 +1,3 @@
-import { json } from "stream/consumers";
-
 export enum LogSeverityLevel {
   low = "low",
   medium = "medium",
@@ -31,7 +29,19 @@ export class LogEntity {
   }
   // Factory constructor
   static fromJson = (jsonData: string): LogEntity => {
+    jsonData = jsonData == "" ? "{}" : jsonData;
     const { message, level, createdAt, origin } = JSON.parse(jsonData);
+    const log = new LogEntity({
+      message,
+      level,
+      createdAt,
+      origin,
+    });
+    return log;
+  };
+  // Factory constructor para crear modelos de log de objetos a entidad de mongo
+  static fromObject = (object: { [key: string]: any }): LogEntity => {
+    const { message, level, createdAt, origin } = object;
     const log = new LogEntity({
       message,
       level,
